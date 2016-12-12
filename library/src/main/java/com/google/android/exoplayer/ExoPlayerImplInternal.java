@@ -342,7 +342,10 @@ import java.util.concurrent.atomic.AtomicInteger;
     enabledRenderers.add(renderer);
     MediaClock mediaClock = renderer.getMediaClock();
     if (mediaClock != null) {
-      Assertions.checkState(rendererMediaClock == null);
+      // Rather than failing if more than one TrackRenderer with MediaClock,
+      // just use the existing one if we have any
+      // Assertions.checkState(rendererMediaClock == null);
+      if (rendererMediaClock != null) return;
       rendererMediaClock = mediaClock;
       rendererMediaClockSource = renderer;
     }
